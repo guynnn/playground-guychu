@@ -1,22 +1,22 @@
 import flask
 from flask import send_file
 from flask import request
-from flask import redirect
+# from flask import redirect
 import os
 
 app = flask.Flask(__name__)
 
-hostName = "playground-guychu.herokuapp.com/"
-
-@app.route('/download/', methods=['GET'])
+@app.route('/download', methods=['GET'])
 def download():
     print("## Headers in download: ", request.headers)
-    return redirect("https://" + hostName + "yay/", code=302)
+    song_name = request.args.get('song_name')
+    print("##", song_name)
+    return send_file("./Resources/" + song_name + ".mp3", as_attachment=True)
 
-@app.route('/yay/', methods=['GET'])
-def yay():
-    print("## Headers in yay: ", request.headers)
-    return send_file("./Resources/dye.mp3", as_attachment=True)
+
+# def redirect():
+#     print("## Headers in download: ", request.headers)
+#     return redirect("yay", code=302)
 
 
 if __name__ == "__main__":
